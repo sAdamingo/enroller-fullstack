@@ -9,4 +9,5 @@ Vue.http.options.root = '/api';
 new Vue({
     el: '#app',
     render: h => h(App)
+
 });

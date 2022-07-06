@@ -88,7 +88,7 @@
         },
         computed: {
             loginButtonLabel() {
-                return this.registering ? 'Zarejestruj się' : 'Zaloguj się';
+                return this.registering ? 'Zarejestruj się' : 'Zalogooj się';
             }
         }
     };
