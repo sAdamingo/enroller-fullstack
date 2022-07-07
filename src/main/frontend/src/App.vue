@@ -51,6 +51,7 @@
                     .then(response => {
                         const token = response.body.token;
                         this.storeAuth(user.login, token);
+                        console.log("Logoewanie udane: " + user.login)
                     })
                     .catch(() => this.failure('Logowanie nieudane.'));
             },

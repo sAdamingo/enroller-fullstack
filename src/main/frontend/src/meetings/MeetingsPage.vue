@@ -59,22 +59,32 @@ export default {
           });
     },
     addNewMeeting(meeting) {
+      console.log(meeting.title);
+      console.log(meeting.description);
+      console.log(meeting.id);
       this.meetings.push(meeting);
       this.$http.post('meetings', meeting)
-          .then(() => {
+          .then(response => {
+            console.log(response.body.id)
+            meeting.id = response.body.id;
             console.log('Spotkanie utworzone.');
             this.fetchMeetings();
           })
           .catch(response => console.log('Nie udało się utworzyć spotkania. Spróbuj jeszcze raz: ' + response.status));
+
     },
     addMeetingParticipant(meeting) {
-      meeting.participants.push(this.username);
-      this.$http.post('meetings/' + meeting.id + '/participants', {login: this.username})
+      meeting.participants.push("{\"login\":"+this.username+"\"}");
+      this.$http.put('meetings/' + meeting.id + '/participants', this.username)
           .then(() => {
-            console.log('Dodano użytkownika do spotkania.Gratulacje.');
             this.fetchMeetings();
+            console.log('Dodano użytkownika do spotkania.Gratulacje.');
           })
           .catch(response => console.log('Nie udało się dodać użytkownika do spotkania: ' + response.status))
+          .then( () => {
+            this.fetchMeetings();
+          });
+      this.fetchMeetings();
     },
     removeMeetingParticipant(meeting) {
       meeting.participants.splice(meeting.participants.indexOf(this.username), 1);
